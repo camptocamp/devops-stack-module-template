@@ -4,7 +4,8 @@ name: "Release"
 on:
   # Do not forget to reactivate release-please on your module. It was deactivated here to avoid creating a polluted
   # CHANGELOG.md that would be ported every time a new repository was created form this template.
-
+  # Simply uncomment the push block and delete the workflow_dispatch line.
+  workflow_dispatch:
   # push:
   #   branches:
   #   - "main"
