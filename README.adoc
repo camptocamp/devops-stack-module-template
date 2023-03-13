@@ -1,0 +1,66 @@
+= devops-stack-module-template
+// Document attributes to replace along the document
+// Here you can define variables for something that keeps repeating along the text
+:chart-version: 1.2.3
+:original-repo-url: https://github.com/path/to/some/repository
+
+A https://devops-stack.io[DevOps Stack] module to deploy *_something_*.
+
+The *_something_* chart used by this module is shipped in this repository as well, in order to avoid any unwanted behaviors caused by unsupported versions. 
+
+[cols="1,1,1",options="autowidth,header"]
+|===
+|Current Chart Version |Original Repository |Default Values
+|*{chart-version}* |{original-repo-url}/subpath/to/the/chart[Chart] |{original-repo-url}//subpath/to/the/values.yaml[`values.yaml`] (here you can also use the artifacthub.io)
+|===
+
+== Usage
+
+_Here you will show examples of how to call this module on your code. Note that the `depends_on` needs to be adapted to you use case._
+
+_You can start by giving a simple example and then show some others with increasing complexity and/or for specific use cases._
+
+[source,terraform]
+----
+module "template" {
+  source = "git::https://github.com/camptocamp/devops-stack-module-template.git?ref=<RELEASE>"
+
+  cluster_name            = local.cluster_name
+  argocd_namespace        = local.argocd_namespace
+
+  # TODO Consider replacing this depends_on by our dependency_ids
+  depends_on = [
+    module.argocd_bootstrap,
+  ]
+}
+----
+
+=== Something Explained Better
+
+_If there is some part of the module's configuration that needs more specific explanations, such as a very particular output on which every other module depends on, maybe consider creating a subsection to improve readability._
+
+NOTE: _The Ascii Doc syntax provides a way to write admonitions such as this one, so use it if you think it is useful. The https://docs.antora.org/antora/latest/asciidoc/admonitions/[official documentation] for Antora Docs provides more examples._
+
+== Technical Reference
+
+_This section will contain the more technical details of the module. It is mainly generated automatically by Terraform Docs (everything that is between the comments `// BEGIN_TF_DOCS` and `// END_TF_DOCS`). However, it is recommended to, at the bare minimum, add a dependencies section to explain the reason on why this module could depend on another one from the DevOps Stack._
+
+_You can safely delete the content between the comments `// BEGIN_TF_DOCS` / `// END_TF_DOCS` and `// BEGIN_TF_TABLES` / `// END_TF_TABLES` when creating your on module._
+
+=== Dependencies
+
+==== `module.argocd_bootstrap`
+
+This module must be one of the first ones to be deployed and consequently it needs to be deployed after the module `argocd_bootstrap`.
+
+// BEGIN_TF_DOCS
+// END_TF_DOCS
+
+=== Reference in table format 
+
+.Show tables
+[%collapsible]
+====
+// BEGIN_TF_TABLES
+// END_TF_TABLES
+====

@@ -1,0 +1,11 @@
+# Define the chart name you want for this chart, then define the charts you want to package in this module as 
+# dependencies. You can then run `helm dependency update` on this folder and Helm will take care to populate the charts 
+# subfolder with every chart packaged in a `.tar.gz`.
+---
+apiVersion: "v2"
+name: "<CHART_NAME>"
+version: "0"
+dependencies:
+  - name: "<DEPENDENCY_NAME>"
+    version: "^1" # Fix the major version only.
+    repository: "<CHART_REPO_URL>"
