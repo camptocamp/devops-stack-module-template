@@ -11,7 +11,7 @@ The *_something_* chart used by this module is shipped in this repository as wel
 [cols="1,1,1",options="autowidth,header"]
 |===
 |Current Chart Version |Original Repository |Default Values
-|*{chart-version}* |{original-repo-url}/subpath/to/the/chart[Chart] |{original-repo-url}//subpath/to/the/values.yaml[`values.yaml`] (here you can also use the artifacthub.io)
+|*{chart-version}* |{original-repo-url}/subpath/to/the/chart[Chart] |{original-repo-url}//subpath/to/the/values.yaml[`values.yaml`] (_here you can also use artifacthub.io_)
 |===
 
 == Usage
@@ -43,9 +43,9 @@ NOTE: _The Ascii Doc syntax provides a way to write admonitions such as this one
 
 == Technical Reference
 
-_This section will contain the more technical details of the module. It is mainly generated automatically by Terraform Docs (everything that is between the comments `// BEGIN_TF_DOCS` and `// END_TF_DOCS`). However, it is recommended to, at the bare minimum, add a dependencies section to explain the reason on why this module could depend on another one from the DevOps Stack._
+_This section will contain the more technical details of the module. It is mainly generated automatically by Terraform Docs (everything that is between the comments `BEGIN_TF_DOCS` / `END_TF_DOCS`). However, it is recommended to, at the bare minimum, add a dependencies section to explain the reason on why this module could depend on another one from the DevOps Stack._
 
-_You can safely delete the content between the comments `// BEGIN_TF_DOCS` / `// END_TF_DOCS` and `// BEGIN_TF_TABLES` / `// END_TF_TABLES` when creating your on module._
+_You can safely delete the content between the comments `BEGIN_TF_DOCS` / `END_TF_DOCS` and `BEGIN_TF_TABLES` / `END_TF_TABLES` when creating your on module._
 
 === Dependencies
 
@@ -54,6 +54,115 @@ _You can safely delete the content between the comments `// BEGIN_TF_DOCS` / `//
 This module must be one of the first ones to be deployed and consequently it needs to be deployed after the module `argocd_bootstrap`.
 
 // BEGIN_TF_DOCS
+=== Requirements
+
+The following requirements are needed by this module:
+
+- [[requirement_argocd]] <<requirement_argocd,argocd>> (>= 4)
+
+- [[requirement_utils]] <<requirement_utils,utils>> (>= 1)
+
+=== Providers
+
+The following providers are used by this module:
+
+- [[provider_argocd]] <<provider_argocd,argocd>> (>= 4)
+
+- [[provider_null]] <<provider_null,null>>
+
+- [[provider_utils]] <<provider_utils,utils>> (>= 1)
+
+=== Modules
+
+No modules.
+
+=== Resources
+
+The following resources are used by this module:
+
+- https://registry.terraform.io/providers/oboukili/argocd/latest/docs/resources/application[argocd_application.this] (resource)
+- https://registry.terraform.io/providers/oboukili/argocd/latest/docs/resources/project[argocd_project.this] (resource)
+- https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource[null_resource.dependencies] (resource)
+- https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource[null_resource.this] (resource)
+- https://registry.terraform.io/providers/cloudposse/utils/latest/docs/data-sources/deep_merge_yaml[utils_deep_merge_yaml.values] (data source)
+
+=== Required Inputs
+
+The following input variables are required:
+
+==== [[input_argocd_namespace]] <<input_argocd_namespace,argocd_namespace>>
+
+Description: Namespace used by Argo CD where the Application and AppProject resources should be created.
+
+Type: `string`
+
+=== Optional Inputs
+
+The following input variables are optional (have default values):
+
+==== [[input_app_autosync]] <<input_app_autosync,app_autosync>>
+
+Description: Automated sync options for the Argo CD Application resource.
+
+Type:
+[source,hcl]
+----
+object({
+    allow_empty = optional(bool)
+    prune       = optional(bool)
+    self_heal   = optional(bool)
+  })
+----
+
+Default:
+[source,json]
+----
+{
+  "allow_empty": false,
+  "prune": true,
+  "self_heal": true
+}
+----
+
+==== [[input_cluster_name]] <<input_cluster_name,cluster_name>>
+
+Description: Name given to the cluster. Value used for naming some the resources created by the module.
+
+Type: `string`
+
+Default: `"cluster"`
+
+==== [[input_dependency_ids]] <<input_dependency_ids,dependency_ids>>
+
+Description: IDs of the other modules on which this module depends on.
+
+Type: `map(string)`
+
+Default: `{}`
+
+==== [[input_helm_values]] <<input_helm_values,helm_values>>
+
+Description: Helm chart value overrides. They should be passed as a list of HCL structures.
+
+Type: `any`
+
+Default: `[]`
+
+==== [[input_target_revision]] <<input_target_revision,target_revision>>
+
+Description: Override of target revision of the application chart.
+
+Type: `string`
+
+Default: `"v1.0.0"`
+
+=== Outputs
+
+The following outputs are exported:
+
+==== [[output_id]] <<output_id,id>>
+
+Description: ID to pass other modules in order to refer to this module as a dependency.
 // END_TF_DOCS
 
 === Reference in table format 
@@ -62,5 +171,106 @@ This module must be one of the first ones to be deployed and consequently it nee
 [%collapsible]
 ====
 // BEGIN_TF_TABLES
+= Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_argocd]] <<requirement_argocd,argocd>> |>= 4
+|[[requirement_utils]] <<requirement_utils,utils>> |>= 1
+|===
+
+= Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_argocd]] <<provider_argocd,argocd>> |>= 4
+|[[provider_null]] <<provider_null,null>> |n/a
+|[[provider_utils]] <<provider_utils,utils>> |>= 1
+|===
+
+= Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/oboukili/argocd/latest/docs/resources/application[argocd_application.this] |resource
+|https://registry.terraform.io/providers/oboukili/argocd/latest/docs/resources/project[argocd_project.this] |resource
+|https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource[null_resource.dependencies] |resource
+|https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource[null_resource.this] |resource
+|https://registry.terraform.io/providers/cloudposse/utils/latest/docs/data-sources/deep_merge_yaml[utils_deep_merge_yaml.values] |data source
+|===
+
+= Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_app_autosync]] <<input_app_autosync,app_autosync>>
+|Automated sync options for the Argo CD Application resource.
+|
+
+[source]
+----
+object({
+    allow_empty = optional(bool)
+    prune       = optional(bool)
+    self_heal   = optional(bool)
+  })
+----
+
+|
+
+[source]
+----
+{
+  "allow_empty": false,
+  "prune": true,
+  "self_heal": true
+}
+----
+
+|no
+
+|[[input_argocd_namespace]] <<input_argocd_namespace,argocd_namespace>>
+|Namespace used by Argo CD where the Application and AppProject resources should be created.
+|`string`
+|n/a
+|yes
+
+|[[input_cluster_name]] <<input_cluster_name,cluster_name>>
+|Name given to the cluster. Value used for naming some the resources created by the module.
+|`string`
+|`"cluster"`
+|no
+
+|[[input_dependency_ids]] <<input_dependency_ids,dependency_ids>>
+|IDs of the other modules on which this module depends on.
+|`map(string)`
+|`{}`
+|no
+
+|[[input_helm_values]] <<input_helm_values,helm_values>>
+|Helm chart value overrides. They should be passed as a list of HCL structures.
+|`any`
+|`[]`
+|no
+
+|[[input_target_revision]] <<input_target_revision,target_revision>>
+|Override of target revision of the application chart.
+|`string`
+|`"v1.0.0"`
+|no
+
+|===
+
+= Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_id]] <<output_id,id>> |ID to pass other modules in order to refer to this module as a dependency.
+|===
 // END_TF_TABLES
 ====
