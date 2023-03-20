@@ -16,7 +16,7 @@ The *_something_* chart used by this module is shipped in this repository as wel
 
 == Usage
 
-_Here you will show examples of how to call this module on your code. Note that the `depends_on` needs to be adapted to you use case._
+_Here you will show examples of how to call this module on your code. Note that the `depends_on` needs to be adapted to your use case._
 
 _You can start by giving a simple example and then show some others with increasing complexity and/or for specific use cases._
 
