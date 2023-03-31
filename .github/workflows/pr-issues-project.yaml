@@ -1,0 +1,17 @@
+---
+name: Project
+
+on:
+  issues:
+    types: [opened, reopened, closed]
+  pull_request:
+    types: [opened, reopened, closed]
+
+jobs:
+  add-to-project:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/add-to-project@0.4.1
+      with:
+        project: https://github.com/orgs/camptocamp/projects/3/
+        github-token: ${{ secrets.TEMP_TOKEN }}
