@@ -13,5 +13,5 @@ on:
     - reopened
 
 jobs:
-  linters:
+  add-to-project:
     uses: camptocamp/devops-stack/.github/workflows/pr-issues-project.yaml@main
