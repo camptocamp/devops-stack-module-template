@@ -8,5 +8,9 @@ terraform {
       source  = "cloudposse/utils"
       version = ">= 1"
     }
+    null = {
+      source  = "hashicorp/null"
+      version = ">= 3"
+    }
   }
 }
