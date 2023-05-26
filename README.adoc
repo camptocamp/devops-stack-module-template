@@ -60,13 +60,15 @@ The following requirements are needed by this module:
 
 - [[requirement_argocd]] <<requirement_argocd,argocd>> (>= 4)
 
+- [[requirement_null]] <<requirement_null,null>> (>= 3)
+
 - [[requirement_utils]] <<requirement_utils,utils>> (>= 1)
 
 === Providers
 
 The following providers are used by this module:
 
-- [[provider_null]] <<provider_null,null>>
+- [[provider_null]] <<provider_null,null>> (>= 3)
 
 - [[provider_utils]] <<provider_utils,utils>> (>= 1)
 
@@ -82,9 +84,9 @@ The following resources are used by this module:
 - https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource[null_resource.this] (resource)
 - https://registry.terraform.io/providers/cloudposse/utils/latest/docs/data-sources/deep_merge_yaml[utils_deep_merge_yaml.values] (data source)
 
-=== Optional Inputs
+=== Required Inputs
 
-The following input variables are optional (have default values):
+The following input variables are required:
 
 ==== [[input_cluster_name]] <<input_cluster_name,cluster_name>>
 
@@ -92,23 +94,15 @@ Description: Name given to the cluster. Value used for naming some the resources
 
 Type: `string`
 
-Default: `"cluster"`
-
 ==== [[input_base_domain]] <<input_base_domain,base_domain>>
 
 Description: Base domain of the cluster. Value used for the ingress' URL of the application.
 
 Type: `string`
 
-Default: `null`
+=== Optional Inputs
 
-==== [[input_cluster_issuer]] <<input_cluster_issuer,cluster_issuer>>
-
-Description: SSL certificate issuer to use. Usually you would configure this value as `letsencrypt-staging` or `letsencrypt-prod` on your root `*.tf` files.
-
-Type: `string`
-
-Default: `"ca-issuer"`
+The following input variables are optional (have default values):
 
 ==== [[input_argocd_namespace]] <<input_argocd_namespace,argocd_namespace>>
 
@@ -125,6 +119,14 @@ Description: Override of target revision of the application chart.
 Type: `string`
 
 Default: `"v1.0.0"`
+
+==== [[input_cluster_issuer]] <<input_cluster_issuer,cluster_issuer>>
+
+Description: SSL certificate issuer to use. Usually you would configure this value as `letsencrypt-staging` or `letsencrypt-prod` on your root `*.tf` files.
+
+Type: `string`
+
+Default: `"ca-issuer"`
 
 ==== [[input_namespace]] <<input_namespace,namespace>>
 
@@ -195,6 +197,7 @@ Description: ID to pass other modules in order to refer to this module as a depe
 |===
 |Name |Version
 |[[requirement_argocd]] <<requirement_argocd,argocd>> |>= 4
+|[[requirement_null]] <<requirement_null,null>> |>= 3
 |[[requirement_utils]] <<requirement_utils,utils>> |>= 1
 |===
 
@@ -203,9 +206,9 @@ Description: ID to pass other modules in order to refer to this module as a depe
 [cols="a,a",options="header,autowidth"]
 |===
 |Name |Version
-|[[provider_null]] <<provider_null,null>> |n/a
 |[[provider_utils]] <<provider_utils,utils>> |>= 1
 |[[provider_argocd]] <<provider_argocd,argocd>> |>= 4
+|[[provider_null]] <<provider_null,null>> |>= 3
 |===
 
 = Resources
@@ -228,20 +231,14 @@ Description: ID to pass other modules in order to refer to this module as a depe
 |[[input_cluster_name]] <<input_cluster_name,cluster_name>>
 |Name given to the cluster. Value used for naming some the resources created by the module.
 |`string`
-|`"cluster"`
-|no
+|n/a
+|yes
 
 |[[input_base_domain]] <<input_base_domain,base_domain>>
 |Base domain of the cluster. Value used for the ingress' URL of the application.
 |`string`
-|`null`
-|no
-
-|[[input_cluster_issuer]] <<input_cluster_issuer,cluster_issuer>>
-|SSL certificate issuer to use. Usually you would configure this value as `letsencrypt-staging` or `letsencrypt-prod` on your root `*.tf` files.
-|`string`
-|`"ca-issuer"`
-|no
+|n/a
+|yes
 
 |[[input_argocd_namespace]] <<input_argocd_namespace,argocd_namespace>>
 |Namespace used by Argo CD where the Application and AppProject resources should be created.
@@ -253,6 +250,12 @@ Description: ID to pass other modules in order to refer to this module as a depe
 |Override of target revision of the application chart.
 |`string`
 |`"v1.0.0"`
+|no
+
+|[[input_cluster_issuer]] <<input_cluster_issuer,cluster_issuer>>
+|SSL certificate issuer to use. Usually you would configure this value as `letsencrypt-staging` or `letsencrypt-prod` on your root `*.tf` files.
+|`string`
+|`"ca-issuer"`
 |no
 
 |[[input_namespace]] <<input_namespace,namespace>>
