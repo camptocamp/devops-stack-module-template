@@ -1,7 +1,7 @@
 = devops-stack-module-template
 // Document attributes to replace along the document
 // Here you can define variables for something that keeps repeating along the text
-:chart-version: 1.2.3
+:CHART-NAME-chart-version: 1.2.3
 :original-repo-url: https://github.com/path/to/some/repository
 
 A https://devops-stack.io[DevOps Stack] module to deploy *_something_*.
