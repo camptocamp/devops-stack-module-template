@@ -3,8 +3,10 @@ resource "null_resource" "dependencies" {
 }
 
 resource "argocd_project" "this" {
+  count = var.argocd_project == null ? 1 : 0
+
   metadata {
-    name      = "<CHART_NAME>"
+    name      = var.destination_cluster != "in-cluster" ? "<CHART_NAME>-${var.destination_cluster}" : "<CHART_NAME>"
     namespace = var.argocd_namespace
     annotations = {
       "devops-stack.io/argocd_namespace" = var.argocd_namespace
@@ -12,11 +14,11 @@ resource "argocd_project" "this" {
   }
 
   spec {
-    description  = "<CHART_NAME> application project"
+    description  = "<CHART_NAME> application project for cluster ${var.destination_cluster}"
     source_repos = ["https://github.com/camptocamp/devops-stack-module-<CHART_NAME>.git"]
 
     destination {
-      name      = "in-cluster"
+      name      = var.destination_cluster
       namespace = var.namespace
     }
 
@@ -37,8 +39,12 @@ data "utils_deep_merge_yaml" "values" {
 
 resource "argocd_application" "this" {
   metadata {
-    name      = "<CHART_NAME>"
+    name      = var.destination_cluster != "in-cluster" ? "<CHART_NAME>-${var.destination_cluster}" : "<CHART_NAME>"
     namespace = var.argocd_namespace
+    labels = merge({
+      "application" = "<CHART_NAME>"
+      "cluster"     = var.destination_cluster
+    }, var.argocd_labels)
   }
 
   timeouts {
@@ -49,7 +55,7 @@ resource "argocd_application" "this" {
   wait = var.app_autosync == { "allow_empty" = tobool(null), "prune" = tobool(null), "self_heal" = tobool(null) } ? false : true
 
   spec {
-    project = argocd_project.this.metadata.0.name
+    project = var.argocd_project == null ? argocd_project.this[0].metadata.0.name : var.argocd_project
 
     source {
       repo_url        = "https://github.com/camptocamp/devops-stack-module-<CHART_NAME>.git"
@@ -61,7 +67,7 @@ resource "argocd_application" "this" {
     }
 
     destination {
-      name      = "in-cluster"
+      name      = var.destination_cluster
       namespace = var.namespace
     }
 
