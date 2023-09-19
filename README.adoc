@@ -1,7 +1,8 @@
 = devops-stack-module-template
 // Document attributes to replace along the document
 // Here you can define variables for something that keeps repeating along the text
-:CHART-NAME-chart-version: 1.2.3
+:CHART-DEPENDENCY-1-NAME-chart-version: 1.2.3
+:CHART-DEPENDENCY-2-NAME-chart-version: 1.2.3
 :original-repo-url: https://github.com/path/to/some/repository
 
 A https://devops-stack.io[DevOps Stack] module to deploy *_something_*.
@@ -11,7 +12,7 @@ The *_something_* chart used by this module is shipped in this repository as wel
 [cols="1,1,1",options="autowidth,header"]
 |===
 |Current Chart Version |Original Repository |Default Values
-|*{CHART-NAME-chart-version}* |{original-repo-url}/subpath/to/the/chart[Chart] |{original-repo-url}//subpath/to/the/values.yaml[`values.yaml`] (_here you can also use artifacthub.io_)
+|*{CHART-DEPENDENCY-NAME-chart-version}* |{original-repo-url}/subpath/to/the/chart[Chart] |{original-repo-url}//subpath/to/the/values.yaml[`values.yaml`] (_here you can also use artifacthub.io_)
 |===
 
 == Usage
@@ -28,10 +29,9 @@ module "template" {
   cluster_name            = local.cluster_name
   argocd_namespace        = local.argocd_namespace
 
-  # TODO Consider replacing this depends_on by our dependency_ids
-  depends_on = [
-    module.argocd_bootstrap,
-  ]
+  dependency_ids = {
+    argocd = module.argocd_bootstrap.id
+  }
 }
 ----
 
