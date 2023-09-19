@@ -1,6 +1,6 @@
 ---
 name: "template"
-title: "Module Template"
+title: "Template Module"
 version: true
 start_page: README.adoc
 nav:
