@@ -62,7 +62,8 @@ resource "argocd_application" "this" {
       path            = "charts/<CHART_NAME>"
       target_revision = var.target_revision
       helm {
-        values = data.utils_deep_merge_yaml.values.output
+        release_name = "<CHART_NAME>"
+        values       = data.utils_deep_merge_yaml.values.output
       }
     }
 
