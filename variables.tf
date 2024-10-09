@@ -48,6 +48,12 @@ variable "helm_values" {
   default     = []
 }
 
+variable "deep_merge_append_list" {
+  description = "A boolean flag to enable/disable appending lists instead of overwriting them."
+  type        = bool
+  default     = false
+}
+
 variable "app_autosync" {
   description = "Automated sync options for the Argo CD Application resource."
   type = object({
